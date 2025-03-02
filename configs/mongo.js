@@ -1,6 +1,8 @@
 'use strict';
 
 import mongoose from "mongoose";
+import User from "../src/user/user.model.js";
+import { hash } from "argon2";
 
 export const dbConnection = async () =>{
     try{
@@ -13,8 +15,25 @@ export const dbConnection = async () =>{
             console.log('Try Connecting');
         });
 
-        mongoose.connection.on('connected', ()=>{
+        mongoose.connection.on('connected', async ()=>{
             console.log('connected to MongoDB');
+
+            try {
+                const userExists = await User.findOne({ role: "ADMIN" });
+                if (!userExists) {
+                    const adminPassword = await hash("adminpassword");
+                    await User.create({
+                        username: "admin",
+                        password: adminPassword,
+                        role: "ADMIN"
+                    });
+                    console.log(" ADMIN created in Database");
+                } else {
+                }
+
+            } catch (error) {
+                console.error("Ups, something went wrong trying to create/verify te ADMIN", error);
+            }
         });
 
         mongoose.connection.on('open', ()=>{
