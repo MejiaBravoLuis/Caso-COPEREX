@@ -2,7 +2,7 @@ import { Router } from "express";
 import { check } from "express-validator";
 import { validarJWT } from "../middlewares/validar-jwt.js"
 import { validarCampos } from "../middlewares/validar-campos.js"
-import { newCompany ,listCompanies, updateCompany } from "./company.controller.js";
+import { newCompany ,listCompanies, updateCompany, generateAndOpenCompaniesReport } from "./company.controller.js";
 import { existCompanyAlready, existCompanyById } from "../helpers/db-validator.js";
 
 const router = Router();
@@ -46,5 +46,11 @@ router.get(
     [ validarJWT ],
     listCompanies
 )
+
+router.get(
+    "/generateReport",
+    [validarJWT],
+     generateAndOpenCompaniesReport
+);
 
 export default router;

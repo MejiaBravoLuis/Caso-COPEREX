@@ -1,0 +1,64 @@
+[{
+  "_id": {
+    "$oid": "67c5c743baf84f834556b138"
+  },
+  "name": "Tech Innovations",
+  "impact": "Medium",
+  "trayectory": 10,
+  "category": "Technology",
+  "status": true,
+  "createdAt": {
+    "$date": "2025-03-03T15:14:11.924Z"
+  },
+  "updatedAt": {
+    "$date": "2025-03-03T15:21:26.887Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "67c5c902baf84f834556b145"
+  },
+  "name": "Tech Solutions",
+  "impact": "High",
+  "trayectory": 5,
+  "category": "Technology",
+  "status": true,
+  "createdAt": {
+    "$date": "2025-03-03T15:21:38.355Z"
+  },
+  "updatedAt": {
+    "$date": "2025-03-03T15:21:38.355Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "67c5ca31baf84f834556b151"
+  },
+  "name": "B Solutions",
+  "impact": "High",
+  "trayectory": 5,
+  "category": "Technology",
+  "status": true,
+  "createdAt": {
+    "$date": "2025-03-03T15:26:41.142Z"
+  },
+  "updatedAt": {
+    "$date": "2025-03-03T15:26:41.142Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "67c5e28c6e0ee7e6e67d3df0"
+  },
+  "name": "A Solutions",
+  "impact": "High",
+  "trayectory": 5,
+  "category": "Technology",
+  "status": true,
+  "createdAt": {
+    "$date": "2025-03-03T17:10:36.272Z"
+  },
+  "updatedAt": {
+    "$date": "2025-03-03T17:10:36.272Z"
+  }
+}]

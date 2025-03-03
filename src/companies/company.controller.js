@@ -1,4 +1,10 @@
-import Company from "../companies/company.model.js"
+import fs from "fs";
+import path from "path";
+import exceljs from "exceljs";
+import open from "open"; 
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+import Company from "../companies/company.model.js"; 
 
 export const newCompany = async (req, res) => {
     try {
@@ -24,7 +30,6 @@ export const newCompany = async (req, res) => {
         });
     }
 };
-
 
 export const listCompanies = async (req, res) => {
     try {
@@ -85,3 +90,61 @@ export const updateCompany = async (req, res) => {
         })
     }
 }
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+export const generateAndOpenCompaniesReport = async (req, res) => {
+    try {
+        const companies = await Company.find();
+
+        if (companies.length === 0) {
+            return res.status(404).json({
+                success: false,
+                message: "No companies were found",
+            });
+        }
+
+        const workbook = new exceljs.Workbook();
+        const worksheet = workbook.addWorksheet("Companies Report");
+
+        worksheet.columns = [
+            { header: "ID", key: "_id", width: 30 },
+            { header: "Name", key: "name", width: 30 },
+            { header: "Impact Level", key: "impact", width: 15 },
+            { header: "Trajectory Years", key: "trayectory", width: 20 },
+            { header: "Category", key: "category", width: 20 },
+            { header: "Registration Date", key: "createdAt", width: 25 },
+        ];
+
+        companies.forEach((company) => {
+            worksheet.addRow(company.toObject());
+        });
+
+        const reportsDir = path.join(__dirname, "../reports");
+        if (!fs.existsSync(reportsDir)) {
+            fs.mkdirSync(reportsDir, { recursive: true }); 
+        }
+
+        const fileName = `Companies_Report_${Date.now()}.xlsx`;
+        const filePath = path.join(reportsDir, fileName);
+
+        await workbook.xlsx.writeFile(filePath);
+
+        await open(filePath);
+
+        res.status(200).json({
+            success: true,
+            message: "Report generated successfully and opened in Excel",
+            filePath: filePath
+        });
+
+    } catch (error) {
+        console.error("Error generating report:", error);
+        res.status(500).json({
+            success: false,
+            message: "Ups, something went wrong trying to generate the report",
+            error: error.message,
+        });
+    }
+};

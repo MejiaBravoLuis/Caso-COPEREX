@@ -6,8 +6,14 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import { dbConnection } from './mongo.js';
 import limiter from '../src/middlewares/validar-cant-peticiones.js';
-import authRoutes from '../src/auth/auth.routes.js'
-import companyRoutes from '../src/companies/company.routes.js'
+import authRoutes from '../src/auth/auth.routes.js';
+import companyRoutes from '../src/companies/company.routes.js';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import path from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const middlewares = (app) => {
     app.use(express.urlencoded({ extended: false }));
@@ -21,6 +27,7 @@ const middlewares = (app) => {
 const routes = (app) => {
     app.use("/Interfer/v1/auth/", authRoutes);
     app.use("/Interfer/v1/company/", companyRoutes);
+    app.use("/Interfer/v1/reports", express.static(path.join(__dirname, "reports")));
 }
 
 const conectarDB = async () => {
