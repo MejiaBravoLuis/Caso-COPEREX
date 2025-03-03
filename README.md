@@ -1,2 +1,2 @@
-Avances para realizar en laboratorio: 
- - Terminar la creación de reportes
+Avances realizados en laboratorio:
+     - Se agregaron colecciones y reportería
